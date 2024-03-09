@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>English Speaking Test</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css";; rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js";></script>
+
+    <script>
+        $(document).ready(function() {
+
+            // Retrieve the username from local storage and set it in the input field
+            var savedUsername = localStorage.getItem('username');
+            if (savedUsername) {
+                $('#username').val(savedUsername);
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+
+            // Configuration for speech recognition
+            recognition.continuous = true;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            // Configure Questions
+            const questionList = { Q1:"Ask the patient about onset of pain.",
+                                   Q2:"Ask the patient about radiation of pain."
+                                 }
+
+            // Event handler when speech recognition starts
+            recognition.onstart = function() {
+                $('#recordButton').addClass('btn-square-active')
+                console.log('Recording started...');
+            };
+
+            // Event handler for speech recognition results
+            recognition.onresult  = (event) => {
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        var result = event.results[i][0].transcript; 
+                        console.log('Recognized: ' + result);
+                        $('#transcription').html(result);
+                        $('#response').html('Now receiving...');
+
+			            var questionID = $('input[name="question"]:checked').val();
+
+                        // Send the recognized text data to the server and get the response
+                        $.ajax({
+                            url: '/chat',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({ QID: questionID,
+                                                   question: questionList[questionID], 
+                                                   text: result, 
+                                                   username: $('#username').val(), 
+                                                   password: $('#password').val() 
+                            }),
+                            success: function(response) {
+                                // Display the text response from the server
+                                $('#response').html(response.text);
+                            }
+                        });
+                    }
+                }
+                
+            };
+
+            // Event handler when speech recognition ends
+            recognition.onend = () => {
+                console.log('Recording ended.');
+                recognition.stop();
+                $('#recordButton').removeClass('btn-square-active')
+            };
+
+            // Event handler when "Speak Start" button is clicked
+            $('#recordButton').click(function() {
+                var username = $('#username').val();
+                localStorage.setItem('username', username);
+                console.log('Username: ' + username);
+                if (recognition) {
+                    recognition.start();
+                } else {
+                    console.log('音声認識はこのブラウザではサポートされていません。');
+                }
+            });
+            $('#recordstopButton').click(function() {
+                if (recognition) {
+                    recognition.stop();
+                } else {
+                    console.log('音声認識はこのブラウザではサポートされていません。');
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Speaking Test</h1>
+        <div class="field3">
+            <h2>Username</h2>
+            <input type="text" id="username" placeholder="Enter your username">
+            <h2>Password</h2>
+            <input type="password" id="password" plaseholder="Enter the password">
+
+            <hr>
+
+            <div class="questionBox">
+                <input type="radio" id="Q1" name="question" value="Q1" checked />
+                <div class="questionField"> Q1: </div>
+                <audio controls src="/static/QuestionA.mp3" type="audio/mp3">Question 1</audio>
+            </div>
+        
+            <div class="questionBox">
+                <input type="radio" id="Q2" name="question" value="Q2" />
+                <div class="questionField"> Q2: </div>
+                <audio controls src="/static/QuestionB.mp3" type="audio/mp3">Question 2</audio>
+            </div>
+                
+        </div>
+
+
+
+        <div class="field1">
+            <button id="recordButton" class="btn-square" type="button">Speak Start</button>
+            
+            <button id="recordstopButton" class="btn-square" type="button">Speak end</button>
+            <p>Speak endボタンはsafari用です</p>
+        </div>
+        <h2>Recognition Result</h2>
+        <div id="transcription" class="field2"></div>
+        <h2>Answer Result</h2>
+        <div id="response" class="field2"></div>
+
+        <div class="field4">
+            <h4>更新履歴</h4>
+            <ul>
+                <li>2024/3/1: Test version is deployed.</li>
+                <li>2024/3/9: First completed version is deployed.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

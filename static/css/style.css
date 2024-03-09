@@ -1,0 +1,110 @@
+body {
+    max-width: 100%;
+    margin: 0 auto; /* 中央揃え */
+    padding: 10px; /* 余白を追加 */
+}
+
+.container {
+    max-width: 80%; /* コンテンツの最大幅を設定 */
+    margin: 0 auto; /* 中央揃え */
+}
+
+.button{
+    text-align: center;
+    width: 200px;
+    font-size: 1.6em;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #68779a;
+    background: #cbe8fa;
+    border-radius: 3px;
+}
+
+
+.btn-square {
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    text-align: center;
+    width: 200px;
+    font-size: 1.6em;
+    background: #668ad8;/*ボタン色*/
+    color: #FFF;
+    border-bottom: solid 4px #627295;
+    border-radius: 3px;
+  }
+.btn-square:active {
+    /*ボタンを押したとき*/
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);/*下に動く*/
+    border-bottom: none;/*線を消す*/
+}
+
+.btn-square-active {
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    border-bottom: none;
+}
+
+.btn{
+    display: inline-block;
+    padding: 0.8em 3em;
+    background-color: #e3364a; /* 背景色 */
+    box-shadow: 0 5px 0 #ca1c30; /* 影の太さ・色 */
+    border-radius: 60px;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none; /* 文字の下線を消す */
+}
+
+.btn:active {
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+.field1{
+    text-align: center ;
+    font-size: 1.8em;
+    border: 1px solid #999;
+    padding: 10px;
+    background: #f7da9c;
+    margin-top:10px;
+}
+
+.field2{
+    text-align: left ;
+    font-size: 1.8em;
+    border: 1px solid #999;
+    padding: 10px;
+    background: #f7da9c;
+    margin-top:10px;
+}
+
+.field3{
+    text-align: center ;
+    font-size: 1.8em;
+    border: 1px solid #999;
+    padding: 10px;
+    background: #6a6cd8;
+    margin-top:10px;
+}
+
+.field4{
+    text-align: left ;
+    font-size: 0.5em;
+    border: 1px solid #999;
+    padding: 10px;
+    margin-top:10px;
+}
+
+.questionBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.questionField{
+    vertical-align: center;
+    padding: 5px;
+}

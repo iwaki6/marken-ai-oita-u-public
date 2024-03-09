@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>English Speaking Test</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css";; rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js";></script>
+
+    <script>
+        $(document).ready(function() {
+
+            // Event handler When "Issue New Passcode" button is clicked
+            $('#issueCodeButton').click(function() {
+                $.ajax({
+                    url: '/admin_world/issueCode',
+                    type: 'GET',
+                    success: function(response) {
+                        // Display the text response from the server
+                        $('#prompt').html(response.text);
+                    }
+                })
+            });
+
+            // Event handler When "Clear" button is clicked
+            $('#clearCodeButton').click(function() {
+                $('#passcode').val('')
+            });
+
+            // Event handler When "Export All Data to EXCEL" button is clicked
+            $('#exportButton').click(function() {
+                $.ajax({
+                    url: '/admin_world/export',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ 
+                        passcode: $('#passcode').val()
+                    }),
+                    success: function(response) {
+                        // Display the text response from the server
+                        $('#prompt').html(response.text);
+                        if (response.success) {
+                            window.open('/admin_world/download', '_blank');
+                        }
+                    }
+                });
+            });
+
+            // Event handler When "Clear All Data from Database" button is clicked
+            $('#clearDBButton').click(function() {
+                $.ajax({
+                    url: '/admin_world/clearDB',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ 
+                        passcode: $('#passcode').val()
+                    }),
+                    success: function(response) {
+                        // Display the text response from the server
+                        $('#prompt').html(response.text);
+                    }
+                });
+            });
+
+            // Event handler when "Log Out" button is clicked
+            $('#logoutButton').click(function() {
+                window.location.href="/logout"
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Under Construction</h1>
+        <div class="field1">
+            <button id="issueCodeButton" class="btn" type="button">Issue New Passcode</button>
+        </div>
+
+        <div class="field1">
+            <h2>Passcode</h2>
+            <input type="number" id="passcode" inputmode="numeric">
+
+            <button id="clearCodeButton" class="btn" type="button">Clear</button>
+        </div>
+
+        <div class="field1">
+            <button id="exportButton" class="btn" type="button">Export All Data to EXCEL</button>
+        </div>
+
+        <div class="field1">
+            <button id="clearDBButton" class="btn" type="button">Clear All Data from Database</button>
+        </div>
+
+        <div class="field1">
+            <button id="logoutButton" class="btn" type="button">Log Out</button>
+        </div>
+
+        <h2>Information</h2>
+        <div id="prompt" class="field2"></div>
+    </div>
+</body>
+</html>
