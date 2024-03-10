@@ -9,6 +9,7 @@ You can use it by just accessing the root URL of the service with your browser.
 While the top page asks a password, no password is needed for the initial setting.
 User's action and the response from chatGPT are registered in a database.
 If you make a superuser account, you can access a management screen (/admin_world) which provides a simple access to the database.
+(If you want to register a superuser, check password.py under the library folder.)
 
 You can use, modify, redistribute these files freely.
 This project is based on the repository https://github.com/hayashik/chatgpt-conversation-training-tool .
@@ -23,7 +24,8 @@ This project is based on the repository https://github.com/hayashik/chatgpt-conv
  - openai == 1.13.3
  - openpyxl == 3.1.2
  - pandas == 2.2.1
- - pymongo[srv] ==4.6.2
+ - pymongo[srv] == 4.6.2
+ - bcrypt == 4.1.2
 
 **Third Party Service:**
 # You need to have accounts for the following services:
