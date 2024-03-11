@@ -1,4 +1,4 @@
-from flask import Blueprint, request, redirect, url_for
+from flask import Blueprint, request, redirect, url_for, render_template
 import flask_login
 
 import library.DBaccess as DBaccess
@@ -10,13 +10,7 @@ module_login = Blueprint('app_login', __name__, url_prefix='')
 @module_login.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        return '''
-               <form action='login' method='POST'>
-                <input type='text' name='email' id='email' placeholder='email'/>
-                <input type='password' name='password' id='password' placeholder='password'/>
-                <input type='submit' name='submit'/>
-               </form>
-               '''
+        return render_template('login_form.html')
 
     email = request.form['email']
     user_info = DBaccess.inquire_user(email)

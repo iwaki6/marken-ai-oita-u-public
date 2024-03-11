@@ -1,9 +1,11 @@
+bcrypt
+email_validator
 flask
 flask_cors
 flask_login
+flask_wtf
 gunicorn
 openai
 openpyxl
 pandas
 pymongo[srv]
-bcrypt

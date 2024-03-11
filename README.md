@@ -21,11 +21,13 @@ This project is based on the repository https://github.com/hayashik/chatgpt-conv
  - flask == 3.0.2
  - flask_cors == 4.0.0
  - flask_login == 0.6.3
+ - flask_wtf == 1.2.1
  - openai == 1.13.3
  - openpyxl == 3.1.2
  - pandas == 2.2.1
  - pymongo[srv] == 4.6.2
  - bcrypt == 4.1.2
+ - email_validator == 2.1.1
 
 **Third Party Service:**
 # You need to have accounts for the following services:
@@ -44,7 +46,7 @@ MARKEN_MAIL_PASSWORD   # Your account password in Outlook Mail
 scores                 # Empty collection which register user's actions and chatGPT response.
 superusers             # Each document in this collection should have keys: "email", "password", "role".
                        # email is a superuser's email address, password is used to log in "/admin_world", and role must be "admin".
-                       # You need to insert such a document manually for each superuser.
+                       # You need to insert such a document manually for each superuser. Check also password.py under library folder.
 
 
 To run the project locally, follow these steps:

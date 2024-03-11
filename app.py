@@ -1,6 +1,7 @@
 
 # Initialize Flask application
-from flask import Flask, render_template, request, jsonify, redirect, url_for, make_response
+from flask import Flask, redirect, url_for
+from flask_wtf.csrf import CSRFProtect
 import flask_login
 
 import os
@@ -13,6 +14,7 @@ APP_KEY = os.environ['MARKEN_APP_KEY'] # Set a secret word freely
 # Initialize Flask application
 app = Flask(__name__)
 app.secret_key = APP_KEY
+csrf = CSRFProtect(app)
 
 # Set up logging
 gunicorn_logger = logging.getLogger('gunicorn.error')

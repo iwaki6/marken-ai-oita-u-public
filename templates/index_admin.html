@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>English Speaking Test</title>
+    <title>English Speaking Test Management Screen</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css";; rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
@@ -9,6 +9,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js";></script>
 
     <script>
+        var csrf_token = "{{ csrf_token() }}";
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                }
+            }
+        });
+
         $(document).ready(function() {
 
             // Event handler When "Issue New Passcode" button is clicked
@@ -73,7 +82,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Admin Under Construction</h1>
+        <h1>Management Screen</h1>
         <div class="field1">
             <button id="issueCodeButton" class="btn" type="button">Issue New Passcode</button>
         </div>

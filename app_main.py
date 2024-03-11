@@ -7,7 +7,7 @@ import library.DBaccess as DBaccess
 module_main = Blueprint('app_main', __name__, url_prefix='')
 
 # Password for the main contents to restrict use by unexpected people. Set freely.
-PASSWORD0 = '' 
+PASSWORD0 = 'maruchan' 
 
 # Dictionaries to store logs
 answerLogs = {}

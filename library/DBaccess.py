@@ -2,6 +2,7 @@ import pymongo
 import os
 import datetime
 import pandas
+from email_validator import validate_email, EmailNotValidError
 
 ATLAS_URI = os.environ['ATLAS_URI']
 DB_NAME = 'marken'
@@ -48,6 +49,14 @@ def clear():
     return True
 
 def inquire_user(email):
+    if email is None:
+        return None
+    try:
+        email_info = validate_email(email, check_deliverability=False)
+        email = email_info.normalized
+    except EmailNotValidError as e:
+        return None
+
     try:
         user = superusers.find_one({"email": email})
         return user
